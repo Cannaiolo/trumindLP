@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRUMIND - Corretores de IA para Imobiliárias</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <h1>Troque seu time de consultores e captadores de imóveis por Corretores de IA</h1>
+      <h2>Potencie sua imobiliária usando Atendentes com Inteligência Artificial</h2>
+      <a href="#whiteListForm" class="cta-button">Escalar equipe agora</a>
+    </div>
+  </header>
+
+<section class="benefits">
+  <div class="container">
+    <h2>Por que escolher Corretores de IA?</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="floating-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3>Automação Total</h3>
+        <p>Menos esforço, mais resultados com processos automatizados</p>
+      </div>
+      <div class="benefit-card">
+        <div class="floating-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <h3>Disponibilidade 24/7</h3>
+        <p>Nunca perca uma oportunidade, atendimento constante</p>
+      </div>
+      <div class="benefit-card">
+        <div class="floating-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 6l-9.5 9.5-5-5L1 18"/>
+            <path d="M17 6h6v6"/>
+          </svg>
+        </div>
+        <h3>Eficiência Escalável</h3>
+        <p>Cresça sem aumentar custos fixos</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trial-section">
+    <div class="container">
+      <h2>Experimente e teste agora, sem compromisso!</h2>
+      <div class="button-group">
+        <a href="#" id="openModalButton" class="cta-button">Ligue para um proprietario</a>
+        <a href="https://wa.me/+5541920018229" class="cta-button" target="_blank">Converse com um Agente no whatsapp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section" id="whiteListForm">
+    <div class="container">
+      <div class="contact-form">
+        <h2>Cadastre-se na White List</h2>
+        <p>Receba informações exclusivas sobre nossa tecnologia</p>
+        <form id="leadForm" onsubmit="return validateForm(event)">
+          <div class="form-group">
+            <label for="name">Nome Completo</label>
+            <input type="text" id="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Telefone</label>
+            <input type="text" id="phone" required>
+          </div>
+          <button type="submit" class="cta-button">Cadastrar</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+<!-- Formulário Modal -->
+<div id="phoneModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-button" id="closeModal">&times;</span>
+        <h2>Insira seu número de telefone</h2>
+        <form id="phoneForm">
+            <div class="form-group">
+                <input type="text" id="phoneNumber" required>
+            </div>
+            <button type="submit" class="cta-button">Enviar</button>
+        </form>
+    </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.querySelector('#phoneModal');
+      const openModalButton = document.querySelector('#openModalButton');
+      const closeButton = document.querySelector('#closeModal');
+
+      openModalButton.addEventListener('click', function(event) {
+          event.preventDefault(); // Previne o comportamento padrão do link
+          modal.style.display = 'flex'; // Torna o modal visível
+      });
+
+      closeButton.addEventListener('click', function() {
+          modal.style.display = 'none'; // Oculta o modal
+      });
+
+      // Opcional: Fechar o modal ao clicar fora dele
+      window.addEventListener('click', function(event) {
+          if (event.target === modal) {
+              modal.style.display = 'none';
+          }
+      });
+  });
+
+  function saveLeadData(event) {
+      event.preventDefault(); // Previne o envio padrão do formulário
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+
+      const leadData = `Nome: ${name}\nE-mail: ${email}\nTelefone: ${phone}\n\n`;
+
+      // Cria um blob com os dados do lead
+      const blob = new Blob([leadData], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+
+      // Cria um link para download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'lead.txt';
+      a.click();
+
+      // Libera o objeto URL
+      URL.revokeObjectURL(url);
+
+      // Limpa o formulário
+      document.getElementById('leadForm').reset();
+  }
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>
