@@ -13,6 +13,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: List files for debugging
+      run: ls -la
+
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
@@ -30,3 +33,5 @@ jobs:
         app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
         slot-name: 'production'
         publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
+
+        # This section is for deploying the application to Azure WebApp using the specified credentials and app name.

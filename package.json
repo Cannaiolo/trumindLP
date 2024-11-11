@@ -1,0 +1,22 @@
+{
+  "name": "trumind_lp",
+  "version": "1.0.0",
+  "description": "trumind_landing_page",
+  "main": "script.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "trumindLP"
+  },
+  "keywords": [
+    "tru"
+  ],
+  "author": "cannaiolo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
