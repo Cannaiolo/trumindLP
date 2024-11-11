@@ -13,9 +13,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: List files for debugging
-      run: ls -la
-
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
@@ -30,13 +27,13 @@ jobs:
     - name: 'Login to Azure'
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
         slot-name: 'production'
-        publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
-
-        # This section is for deploying the application to Azure WebApp using the specified credentials and app name.
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
