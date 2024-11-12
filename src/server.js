@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
 
 // Endpoint para cadastrar um lead
 app.post('/leads', (req, res) => {
+    console.log('Requisição recebida para cadastrar um lead:', req.body); // Log adicionado
     const { nome, email, telefone } = req.body;
 
     // Verificar se todos os campos estão presentes
