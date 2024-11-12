@@ -1,6 +1,6 @@
 :root {
-    --primary: #6bc5e4;
-    --secondary: #3adbb5;
+    --primary: #0000ff;
+    --secondary: #0c5073;
     --light: #f8fafc;
     --dark: #0f172a;
 }
@@ -74,7 +74,9 @@ body {
 }
 
 .header {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--primary), var(--secondary)), url('/public/imagem.png');
+    background-size: cover;
+    background-position: center;
     color: white;
     padding: 4rem 0;
     text-align: center;
