@@ -1,47 +1,48 @@
+// src/server.js
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
-const bodyParser = require('body-parser');
-
+const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
-// Middleware para analisar o corpo das requisições
-app.use(bodyParser.json());
-app.use(express.static('public')); // Serve arquivos estáticos da pasta public
+// Middleware para analisar JSON
+app.use(express.json());
 
-// Conectar ao banco de dados
-let db = new sqlite3.Database('./leads.db', (err) => {
-    if (err) {
-        console.error(err.message);
-    }
-    console.log('Conectado ao banco de dados SQLite.');
+// Middleware para servir arquivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Endpoint para a raiz
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Altere 'index.html' para o seu arquivo principal
 });
 
-// Endpoint para cadastrar leads
-app.post('/api/leads', (req, res) => {
-    const { nomeCompleto, numeroTelefone, email } = req.body;
+// Conectar ao banco de dados
+const dbPath = path.join(__dirname, 'leads.db');
+const db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+        console.error('Erro ao abrir o banco de dados:', err.message);
+    } else {
+        console.log('Conexão com o banco de dados estabelecida.');
+    }
+});
 
-    const sql = `INSERT INTO leads (nomeCompleto, numeroTelefone, email) VALUES (?, ?, ?)`;
-    db.run(sql, [nomeCompleto, numeroTelefone, email], function(err) {
+// Endpoint para cadastrar um lead
+app.post('/leads', (req, res) => {
+    const { nome, email, telefone } = req.body;
+
+    if (!nome || !email) {
+        return res.status(400).json({ error: 'Nome e email são obrigatórios.' });
+    }
+
+    db.run(`INSERT INTO leads_trumindLP (nome, email, telefone) VALUES (?, ?, ?)`, [nome, email, telefone], function(err) {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
-        res.status(201).json({ id: this.lastID, nomeCompleto, numeroTelefone, email });
+        res.status(201).json({ id: this.lastID });
     });
 });
 
 // Iniciar o servidor
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
-
-// Fechar a conexão com o banco de dados ao encerrar o servidor
-process.on('SIGINT', () => {
-    db.close((err) => {
-        if (err) {
-            console.error(err.message);
-        }
-        console.log('Conexão com o banco de dados fechada.');
-        process.exit(0);
-    });
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
