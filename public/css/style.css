@@ -67,12 +67,6 @@ body {
     line-height: 1.6;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-}
-
 .header {
     background: linear-gradient(135deg, var(--primary), var(--secondary)), url('/public/imagem.png');
     background-size: cover;
@@ -80,32 +74,31 @@ body {
     color: white;
     padding: 4rem 0;
     text-align: center;
+    position: relative; /* Permite o posicionamento absoluto da logo */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.logo {
+    position: absolute; /* Permite que a logo fique no canto superior esquerdo */
+    top: 1rem; /* Ajuste conforme necessário */
+    left: 1rem; /* Ajuste conforme necessário */
 }
 
 .header h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    margin-top: 2cm; /* Adiciona 2cm de margem superior */
 }
 
 .header h2 {
     font-size: 1.5rem;
     opacity: 0.9;
     margin-bottom: 2rem;
-}
-
-.cta-button {
-    background: white;
-    color: var(--primary);
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    font-weight: bold;
-    text-decoration: none;
-    display: inline-block;
-    transition: transform 0.2s;
-}
-
-.cta-button:hover {
-    transform: translateY(-2px);
 }
 
 .benefits {
