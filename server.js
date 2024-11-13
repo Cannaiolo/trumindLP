@@ -14,7 +14,7 @@ app.use(helmet());
 app.use(express.json());
 
 // Middleware para servir arquivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'src', 'public')));
 
 // Caminho para o banco de dados
 const dbPath = path.join(__dirname, process.env.DB_NAME || 'leads.db');
