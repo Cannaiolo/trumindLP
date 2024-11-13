@@ -14,25 +14,33 @@ app.use(helmet());
 app.use(express.json());
 
 // Middleware para servir arquivos estáticos
-app.use(express.static(path.join(__dirname, 'src', 'public')));
+app.use(express.static(path.join(__dirname, 'src', 'public'))); // Ajuste o caminho aqui
 
 // Caminho para o banco de dados
-const dbPath = path.join(__dirname, 'src', process.env.DB_NAME || 'leads.db');
+const dbPath = path.join(__dirname, 'leads.db'); // Mantenha o caminho para o banco de dados
+
+// Função para conectar ao banco de dados
+function connectToDatabase() {
+    return new sqlite3.Database(dbPath, (err) => {
+        if (err) {
+            console.error('Erro ao abrir o banco de dados:', err.message);
+        } else {
+            console.log('Conexão com o banco de dados estabelecida.');
+        }
+    });
+}
 
 // Conectar ao banco de dados
-const db = new sqlite3.Database(dbPath, (err) => {
-    if (err) {
-        console.error('Erro ao abrir o banco de dados:', err.message);
-    } else {
-        console.log('Conexão com o banco de dados estabelecida.');
-    }
-});
+const db = connectToDatabase();
 
 // Middleware para validação de dados
 function validateLead(req, res, next) {
     const { nome, email, telefone } = req.body;
     if (!nome || !email) {
         return res.status(400).json({ error: 'Nome e email são obrigatórios.' });
+    }
+    if (nome.length < 3) {
+        return res.status(400).json({ error: 'Nome deve ter pelo menos 3 caracteres.' });
     }
     const emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(email)) {
@@ -47,7 +55,7 @@ function validateLead(req, res, next) {
 
 // Endpoint para a raiz
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'src', 'public', 'index.html'));
 });
 
 // Endpoint para cadastrar um lead com validação
