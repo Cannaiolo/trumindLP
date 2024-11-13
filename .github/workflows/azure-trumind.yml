@@ -60,5 +60,5 @@ jobs:
         with:
           app-name: 'trumindLP'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EACBCCF7D13545ABA93C230842A90735 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
