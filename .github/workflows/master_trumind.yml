@@ -58,5 +58,5 @@ jobs:
         with:
           app-name: 'trumind'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BBC65DC872D045CAA17639DA4FB19E97 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B3C728537A9141DF95A7644F9C713CE7 }}
           package: .
