@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'src', 'public')));
 
 // Caminho para o banco de dados
-const dbPath = path.join(__dirname, process.env.DB_NAME || 'leads.db');
+const dbPath = path.join(__dirname, 'src', process.env.DB_NAME || 'leads.db');
 
 // Conectar ao banco de dados
 const db = new sqlite3.Database(dbPath, (err) => {

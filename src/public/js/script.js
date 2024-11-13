@@ -1,3 +1,5 @@
+// src/public/js/script.js
+
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.querySelector('#phoneModal');
     const openModalButton = document.querySelector('#openModalButton');
@@ -40,13 +42,18 @@ function saveLeadData(event) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ nome: nomeCompleto, telefone: numeroTelefone, email }),
+        body: JSON.stringify({ nome: nomeCompleto, telefone: numeroTelefone, email: email }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao cadastrar o lead');
+        }
+        return response.json();
+    })
     .then(data => {
         console.log('Lead salvo:', data);
         document.getElementById('leadForm').reset();
-        alert('Lead cadastrado com sucesso!');
+        alert('Lead cadastrado com sucesso! ID: ' + data.id);
     })
     .catch((error) => {
         console.error('Erro ao salvar o lead:', error);
