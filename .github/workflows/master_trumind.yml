@@ -11,8 +11,9 @@ on:
 
 permissions:
   contents: read
-  id-token: write
+  id-token: write # Permissão necessária para OIDC
   actions: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -47,7 +48,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # Permissão necessária para OIDC
 
     steps:
       - name: Download artifact from build job
@@ -64,6 +65,7 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          allow-no-subscriptions: true # Adiciona flexibilidade se não houver subscrição
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -72,4 +74,3 @@ jobs:
           app-name: 'trumind'
           slot-name: 'Production'
           package: .
-          
