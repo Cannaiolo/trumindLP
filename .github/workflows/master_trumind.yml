@@ -9,11 +9,6 @@ on:
       - master
   workflow_dispatch:
 
-permissions:
-  contents: read
-  id-token: write # Permissão necessária para OIDC
-  actions: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,7 +19,7 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '18.x'
 
       - name: npm install, build, and test
         run: |
@@ -48,7 +43,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # Permissão necessária para OIDC
+      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -62,10 +57,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_39B73039A7B14730B63860E06FA708BF }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A4E24C85B6F345E3A1F660BAD5B2ACA4 }}
-          subscription-id: ${{ AZUREAPPSERVICE_SUBSCRIPTIONID_70033C8D98BC41F78FC1026A14E0EF60 }}
-          allow-no-subscriptions: true # Adiciona flexibilidade se não houver subscrição
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_9E620FCB46EC4C24BF0BC401D998C8E7 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_DC6E42859D1A4F63B650D64BAADC5B97 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E2546F8B8FE149988649D51756AA871C }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -74,3 +68,4 @@ jobs:
           app-name: 'trumind'
           slot-name: 'Production'
           package: .
+          
