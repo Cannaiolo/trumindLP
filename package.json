@@ -5,14 +5,16 @@
   "main": "script.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "jest"  
   },
   "repository": {
     "type": "git",
-    "url": "trumindLP"
+    "url": "https://github.com/Cannaiolo/trumindLP"  
   },
   "keywords": [
-    "tru"
+    "tru",
+    "landing",
+    "page"
   ],
   "author": "cannaiolo",
   "license": "ISC",
@@ -21,5 +23,8 @@
     "express": "^4.21.1",
     "helmet": "^8.0.0",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"  
   }
 }
